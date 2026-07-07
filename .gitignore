@@ -1,0 +1,22 @@
+## Carpetas de compilación (Binaris e intermediarios)
+[Bb]in/
+[Oo]bj/
+
+## Configuración de editores (Visual Studio / VS Code / Rider)
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+.idea/
+
+## Archivos de usuario y secretos locales
+appsettings.Development.json
+secrets.json
+.env
+
+## Paquetes restaurados (reinstalables automáticamente)
+*.nuget.props
+*.nuget.targets
+packages/

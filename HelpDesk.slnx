@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="HelDesk.API/HelDesk.API.csproj" Id="09318625-1f9c-4cc3-aa37-a9e847a4a2dc" />
+  <Project Path="HelpDesk.Application/HelpDesk.Application.csproj" Id="990e936c-165d-48c1-ab9e-f98342848ecf" />
+  <Project Path="HelpDesk.Domain/HelpDesk.Domain.csproj" Id="29e968ef-98bf-45fe-8489-78729388d2d9" />
+  <Project Path="HelpDesk.Infrastructure/HelpDesk.Infrastructure.csproj" Id="778719de-8dc8-4834-9213-b964f4eeb7ed" />
+  <Project Path="HelpDesk.Shared/HelpDesk.Shared.csproj" Id="b59636dc-edf4-4800-8986-5aa78f86d19d" />
+</Solution>
