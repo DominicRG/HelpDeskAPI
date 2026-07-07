@@ -12,11 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Mappings\" />
-    <Folder Include="Validators\" />
-    <Folder Include="Services\" />
+    <Folder Include="Area\Services\" />
   </ItemGroup>
 
 </Project>

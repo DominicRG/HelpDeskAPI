@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="HelDesk.API/HelDesk.API.csproj" Id="09318625-1f9c-4cc3-aa37-a9e847a4a2dc" />
   <Project Path="HelpDesk.Application/HelpDesk.Application.csproj" Id="990e936c-165d-48c1-ab9e-f98342848ecf" />
   <Project Path="HelpDesk.Domain/HelpDesk.Domain.csproj" Id="29e968ef-98bf-45fe-8489-78729388d2d9" />
