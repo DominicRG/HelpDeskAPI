@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HelpDesk.Application.Area.Interfaces
+namespace HelpDesk.Application.Area.Services.Interfaces
 {
     public interface IAreaService
     {
