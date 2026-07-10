@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using HelpDesk.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using HelpDesk.Infrastructure.Repositories.Interfaces;
+using HelpDesk.Infrastructure.Repositories.Implementations;
 
 namespace HelpDesk.Infrastructure.DependencyInjection
 {
@@ -46,6 +48,8 @@ namespace HelpDesk.Infrastructure.DependencyInjection
         //Se indica como emparejar las interfaces con las clases reales
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IAreaRepository, AreaRepository>();
+
             return services;
         }
     }

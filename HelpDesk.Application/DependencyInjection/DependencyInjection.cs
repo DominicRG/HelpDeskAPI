@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using HelpDesk.Application.Area.Services.Implementations;
+using HelpDesk.Application.Area.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +20,8 @@ namespace HelpDesk.Application.DependencyInjection
         //Se indica como emparejar las interfaces con las clases reales
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddScoped<IAreaService, AreaService>();
+
             return services;
         }
     }

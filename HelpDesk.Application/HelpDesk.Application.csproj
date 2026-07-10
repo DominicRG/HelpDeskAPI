@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HelpDesk.Domain\HelpDesk.Domain.csproj" />
+    <ProjectReference Include="..\HelpDesk.Infrastructure\HelpDesk.Infrastructure.csproj" />
     <ProjectReference Include="..\HelpDesk.Shared\HelpDesk.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Area\Services\Implementations\" />
   </ItemGroup>
 
   <ItemGroup>
