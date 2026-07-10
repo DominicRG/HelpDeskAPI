@@ -29,22 +29,22 @@ namespace HelpDesk.Application.Area.Services.Implementations
             }).ToList();
         }
 
-        public Task<int> CreateAsync(CreateAreaRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<AreaDTO?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
+        public Task<int> CreateAsync(CreateAreaRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> UpdateAsync(int id, UpdateAreaRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
