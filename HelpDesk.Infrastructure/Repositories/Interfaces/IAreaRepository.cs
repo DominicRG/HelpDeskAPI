@@ -9,8 +9,8 @@ namespace HelpDesk.Infrastructure.Repositories.Interfaces
     {
         Task<List<Area>> GetAllAsync();
         Task<Area?> GetByIdAsync(int id);
-        Task<Area> CreateAsync(Area area);
-        Task UpdateAsync(Area area);
-        Task DeleteAsync(Area area);
+        void Add(Area area);
+        void Update(Area area);
+        void Delete(Area area);
     }
 }

@@ -1,4 +1,4 @@
-﻿using HelpDesk.Domain.Entities;
+﻿ using HelpDesk.Domain.Entities;
 using HelpDesk.Infrastructure.Persistence;
 using HelpDesk.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -32,29 +32,20 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
                 .FirstOrDefaultAsync(x => x.IdArea == id);
         }
 
-        public async Task<Area> CreateAsync(Area area)
+        public void Add(Area area)
         {
             _context.Area.Add(area);
-
-            await _context.SaveChangesAsync();
-
-            return area;
         }
 
-        public async Task UpdateAsync(Area area)
+        public void Update(Area area)
         {
             _context.Area.Update(area);
-
-            await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Area area)
+        public void Delete(Area area)
         {
             area.Activo = false;
-
             _context.Area.Update(area);
-
-            await _context.SaveChangesAsync();
         }
     }
 }
