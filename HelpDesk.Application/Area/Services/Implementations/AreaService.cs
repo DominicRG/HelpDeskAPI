@@ -43,6 +43,8 @@ namespace HelpDesk.Application.Area.Services.Implementations
 
         public async Task<int> CreateAsync(CreateAreaRequest request)
         {
+            if (await _repository.ExistByCodeAsync(request.Areaa)) throw new Exception("Ya existe un area registrada con ese código");
+
             var area = new HelpDesk.Domain.Entities.Area
             {
                 Areaa = request.Areaa,
