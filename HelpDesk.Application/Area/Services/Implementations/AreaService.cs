@@ -1,5 +1,7 @@
 ﻿using HelpDesk.Application.Area.DTOs;
 using HelpDesk.Application.Area.Services.Interfaces;
+using HelpDesk.Domain.Entities;
+using HelpDesk.Infrastructure.Persistence.Interfaces;
 using HelpDesk.Infrastructure.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,16 @@ namespace HelpDesk.Application.Area.Services.Implementations
 {
     public class AreaService : IAreaService
     {
+        //Repositorios de entities
         private readonly IAreaRepository _repository;
 
-        public AreaService(IAreaRepository repository)
+        //Interfaz para guardar cambios globales
+        private readonly IDatabaseContext _database;
+
+        public AreaService(IAreaRepository repository, IDatabaseContext database)
         {
             _repository = repository;
+            _database = database;
         }
 
         public async Task<List<AreaDTO>> GetAllAsync()
@@ -34,12 +41,26 @@ namespace HelpDesk.Application.Area.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<int> CreateAsync(CreateAreaRequest request)
+        public async Task<int> CreateAsync(CreateAreaRequest request)
         {
-            throw new NotImplementedException();
+            if (await _repository.ExistByCodeAsync(request.Areaa)) throw new Exception("Ya existe un area registrada con ese código");
+
+            var area = new HelpDesk.Domain.Entities.Area
+            {
+                Areaa = request.Areaa,
+                Nombre = request.Nombre,
+                Activo = true,
+                UsuarioCreacionId = 0,
+                FechaCreacion = DateTime.Now
+            };
+
+            _repository.Add(area);
+            await _database.SaveChangesAsync();
+
+            return area.IdArea;
         }
 
-        public Task<bool> UpdateAsync(int id, UpdateAreaRequest request)
+        public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }

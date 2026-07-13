@@ -7,6 +7,7 @@ using HelpDesk.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using HelpDesk.Infrastructure.Repositories.Interfaces;
 using HelpDesk.Infrastructure.Repositories.Implementations;
+using HelpDesk.Infrastructure.Persistence.Interfaces;
 
 namespace HelpDesk.Infrastructure.DependencyInjection
 {
@@ -49,6 +50,9 @@ namespace HelpDesk.Infrastructure.DependencyInjection
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAreaRepository, AreaRepository>();
+
+            //Registramos la interfaz para implementar los cambios globales
+            services.AddScoped<IDatabaseContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             return services;
         }
