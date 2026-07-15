@@ -36,9 +36,20 @@ namespace HelpDesk.Application.Area.Services.Implementations
             }).ToList();
         }
 
-        public Task<AreaDTO?> GetByIdAsync(int id)
+        public async Task<AreaDTO?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var area = await _repository.GetByIdAsync(id);
+
+            if(area == null)
+                return null;
+
+            return new AreaDTO
+            {
+                IdArea = area.IdArea,
+                Areaa = area.Areaa,
+                Nombre = area.Nombre,
+                Activo = area.Activo
+            };
         }
 
         public async Task<int> CreateAsync(CreateAreaRequest request)
@@ -60,9 +71,28 @@ namespace HelpDesk.Application.Area.Services.Implementations
             return area.IdArea;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> UpdateAsync(int id, UpdateAreaRequest request)
         {
-            throw new NotImplementedException();
+            var area = await _repository.GetByIdAsync(id);
+
+            if (area == null)
+                throw new Exception("Área no encontrada.");
+
+            if (await _repository.ExistByCodeAsync(request.Areaa, id))
+                throw new Exception("Ya existe un área con ese codigo.");
+
+            area.Areaa = request.Areaa;
+            area.Nombre = request.Nombre;
+            area.Activo = request.Activo;
+
+            area.UsuarioModificaId = 1; //Ponemos un id provisional
+            area.FechaModifica = DateTime.Now;
+
+            _repository.Update(area);
+
+            await _database.SaveChangesAsync();
+
+            return true;
         }
 
         public Task<bool> DeleteAsync(int id)

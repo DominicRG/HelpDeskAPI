@@ -29,6 +29,7 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
         public async Task<Area?> GetByIdAsync(int id)
         {
             return await _context.Area
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.IdArea == id);
         }
 
@@ -48,10 +49,18 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
             _context.Area.Update(area);
         }
 
-        //Metodo para saber si existe un Area igual a la que se ingresa, evaluando el Areaa
+        //Metodo para saber si existe un Area igual a la que se ingresa, evaluando el Areaa, considerando que sea distinto al de la entidad que se manda
         public async Task<bool> ExistByCodeAsync(string areaa)
         {
             return await _context.Area.AnyAsync(x => x.Areaa == areaa);
+        }
+
+        //Metodo para saber si existe un Area igual a la que se ingresa, evaluando el Areaa, considerando que sea distinto al de la entidad que se manda
+        public async Task<bool> ExistByCodeAsync(string areaa, int currentAreaaId)
+        {
+            return await _context.Area.AnyAsync(x => 
+            x.Areaa == areaa 
+            && x.IdArea != currentAreaaId);
         }
     }
 }

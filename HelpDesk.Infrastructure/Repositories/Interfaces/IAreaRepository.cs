@@ -13,5 +13,6 @@ namespace HelpDesk.Infrastructure.Repositories.Interfaces
         void Update(Area area);
         void Delete(Area area);
         Task<bool> ExistByCodeAsync(string areaa);
+        Task<bool> ExistByCodeAsync(string areaa, int currentAreaaId);
     }
 }
