@@ -1,5 +1,6 @@
 ﻿using HelpDesk.Application.Area.DTOs;
 using HelpDesk.Application.Area.Services.Interfaces;
+using HelpDesk.Shared.Constants;
 using HelpDesk.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace HelDesk.API.Controllers
         {
             var areas = await _service.GetAllAsync();
 
-            return Ok(ApiResponseFactory.Success(areas, "Áreas obtenidas correctamente"));
+            return Ok(ApiResponseFactory.Success(areas, EntityMessages.GetAll(EntityNames.Areas)));
         }
 
         [HttpGet("{id:int}")]
@@ -31,10 +32,10 @@ namespace HelDesk.API.Controllers
 
             if(area == null)
             {
-                return NotFound(ApiResponseFactory.Failure<string>("No se encontro el area solicitada"));
+                return NotFound(ApiResponseFactory.Failure<string>(EntityMessages.NotFound(EntityNames.Area)));
             }
             
-            return Ok(ApiResponseFactory.Success(area, "Area obtenida correctamente"));
+            return Ok(ApiResponseFactory.Success(area, EntityMessages.Get(EntityNames.Area)));
         }
 
         [HttpPost]
@@ -42,7 +43,7 @@ namespace HelDesk.API.Controllers
         {
             var id = await _service.CreateAsync(request);
 
-            return Ok(ApiResponseFactory.Success(id, "Área registrada correctamente"));
+            return Ok(ApiResponseFactory.Success(id, EntityMessages.Created(EntityNames.Area)));
         }
 
         [HttpPut("{id:int}")]
@@ -50,7 +51,15 @@ namespace HelDesk.API.Controllers
         {
             await _service.UpdateAsync(id, request);
 
-            return Ok(ApiResponseFactory.Success(true, "Área actualizada correctamente"));
+            return Ok(ApiResponseFactory.Success(true, EntityMessages.Created(EntityNames.Area)));
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _service.DeleteAsync(id);
+
+            return Ok(ApiResponseFactory.Success(id, EntityMessages.Deleted(EntityNames.Area)));
         }
     }
 }

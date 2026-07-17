@@ -5,6 +5,7 @@ using HelpDesk.Infrastructure.Persistence.Interfaces;
 using HelpDesk.Infrastructure.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace HelpDesk.Application.Area.Services.Implementations
@@ -61,7 +62,7 @@ namespace HelpDesk.Application.Area.Services.Implementations
                 Areaa = request.Areaa,
                 Nombre = request.Nombre,
                 Activo = true,
-                UsuarioCreacionId = 0,
+                UsuarioCreacionId = 1,
                 FechaCreacion = DateTime.Now
             };
 
@@ -95,9 +96,21 @@ namespace HelpDesk.Application.Area.Services.Implementations
             return true;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var area = await _repository.GetByIdAsync(id);
+
+            if (area == null) throw new Exception("Área no encontrada.");
+
+            area.Activo = false;
+            area.UsuarioModificaId = 1; //Ponemos un id provisional
+            area.FechaModifica = DateTime.Now;
+
+            _repository.Delete(area);
+
+            await _database.SaveChangesAsync();
+
+            return true;
         }
     }
 }

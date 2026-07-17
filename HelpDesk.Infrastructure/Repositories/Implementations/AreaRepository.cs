@@ -45,7 +45,6 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
 
         public void Delete(Area area)
         {
-            area.Activo = false;
             _context.Area.Update(area);
         }
 
