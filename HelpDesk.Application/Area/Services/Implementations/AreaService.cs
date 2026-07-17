@@ -3,6 +3,8 @@ using HelpDesk.Application.Area.Services.Interfaces;
 using HelpDesk.Domain.Entities;
 using HelpDesk.Infrastructure.Persistence.Interfaces;
 using HelpDesk.Infrastructure.Repositories.Interfaces;
+using HelpDesk.Shared.Constants;
+using HelpDesk.Shared.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -55,7 +57,7 @@ namespace HelpDesk.Application.Area.Services.Implementations
 
         public async Task<int> CreateAsync(CreateAreaRequest request)
         {
-            if (await _repository.ExistByCodeAsync(request.Areaa)) throw new Exception("Ya existe un area registrada con ese código");
+            if (await _repository.ExistByCodeAsync(request.Areaa)) throw new BusinessException(EntityMessages.AlreadyExist(EntityNames.Area));
 
             var area = new HelpDesk.Domain.Entities.Area
             {
@@ -77,10 +79,10 @@ namespace HelpDesk.Application.Area.Services.Implementations
             var area = await _repository.GetByIdAsync(id);
 
             if (area == null)
-                throw new Exception("Área no encontrada.");
+                throw new NotFoundException(EntityMessages.NotFound(EntityNames.Area));
 
             if (await _repository.ExistByCodeAsync(request.Areaa, id))
-                throw new Exception("Ya existe un área con ese codigo.");
+                throw new BusinessException(EntityMessages.AlreadyExist(EntityNames.Area));
 
             area.Areaa = request.Areaa;
             area.Nombre = request.Nombre;
@@ -100,7 +102,7 @@ namespace HelpDesk.Application.Area.Services.Implementations
         {
             var area = await _repository.GetByIdAsync(id);
 
-            if (area == null) throw new Exception("Área no encontrada.");
+            if (area == null) throw new NotFoundException(EntityMessages.NotFound(EntityNames.Area));
 
             area.Activo = false;
             area.UsuarioModificaId = 1; //Ponemos un id provisional

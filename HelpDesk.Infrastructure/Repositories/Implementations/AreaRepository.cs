@@ -48,7 +48,7 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
             _context.Area.Update(area);
         }
 
-        //Metodo para saber si existe un Area igual a la que se ingresa, evaluando el Areaa, considerando que sea distinto al de la entidad que se manda
+        //Metodo para saber si existe un Area igual a la que se ingresa, evaluando el Areaa
         public async Task<bool> ExistByCodeAsync(string areaa)
         {
             return await _context.Area.AnyAsync(x => x.Areaa == areaa);
