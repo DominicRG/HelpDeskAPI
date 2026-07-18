@@ -51,7 +51,7 @@ namespace HelDesk.API.Controllers
         {
             await _service.UpdateAsync(id, request);
 
-            return Ok(ApiResponseFactory.Success(true, EntityMessages.Created(EntityNames.Area)));
+            return Ok(ApiResponseFactory.Success(true, EntityMessages.Updated(EntityNames.Area)));
         }
 
         [HttpDelete("{id:int}")]

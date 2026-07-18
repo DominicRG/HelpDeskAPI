@@ -1,4 +1,5 @@
-﻿using HelpDesk.Application.Area.DTOs;
+﻿using AutoMapper;
+using HelpDesk.Application.Area.DTOs;
 using HelpDesk.Application.Area.Services.Interfaces;
 using HelpDesk.Domain.Entities;
 using HelpDesk.Infrastructure.Persistence.Interfaces;
@@ -14,14 +15,18 @@ namespace HelpDesk.Application.Area.Services.Implementations
 {
     public class AreaService : IAreaService
     {
+        //Interfaz que representa los mappers(TODOS) que creamos
+        private readonly IMapper _mapper;
+
         //Repositorios de entities
         private readonly IAreaRepository _repository;
 
         //Interfaz para guardar cambios globales
         private readonly IDatabaseContext _database;
 
-        public AreaService(IAreaRepository repository, IDatabaseContext database)
+        public AreaService(IMapper mapper, IAreaRepository repository, IDatabaseContext database)
         {
+            _mapper = mapper;
             _repository = repository;
             _database = database;
         }
@@ -30,13 +35,15 @@ namespace HelpDesk.Application.Area.Services.Implementations
         {
             var areas = await _repository.GetAllAsync();
 
-            return areas.Select(area => new AreaDTO
-            {
-                IdArea =  area.IdArea,
-                Areaa = area.Areaa,
-                Nombre = area.Nombre,
-                Activo = area.Activo
-            }).ToList();
+            //return areas.Select(area => new AreaDTO
+            //{
+            //    IdArea =  area.IdArea,
+            //    Areaa = area.Areaa,
+            //    Nombre = area.Nombre,
+            //    Activo = area.Activo
+            //}).ToList();
+
+            return _mapper.Map<List<AreaDTO>>(areas);
         }
 
         public async Task<AreaDTO?> GetByIdAsync(int id)
@@ -46,27 +53,36 @@ namespace HelpDesk.Application.Area.Services.Implementations
             if(area == null)
                 return null;
 
-            return new AreaDTO
-            {
-                IdArea = area.IdArea,
-                Areaa = area.Areaa,
-                Nombre = area.Nombre,
-                Activo = area.Activo
-            };
+            //return new AreaDTO
+            //{
+            //    IdArea = area.IdArea,
+            //    Areaa = area.Areaa,
+            //    Nombre = area.Nombre,
+            //    Activo = area.Activo
+            //};
+
+            return _mapper.Map<AreaDTO>(area);
         }
 
         public async Task<int> CreateAsync(CreateAreaRequest request)
         {
             if (await _repository.ExistByCodeAsync(request.Areaa)) throw new BusinessException(EntityMessages.AlreadyExist(EntityNames.Area));
 
-            var area = new HelpDesk.Domain.Entities.Area
-            {
-                Areaa = request.Areaa,
-                Nombre = request.Nombre,
-                Activo = true,
-                UsuarioCreacionId = 1,
-                FechaCreacion = DateTime.Now
-            };
+            //var area = new HelpDesk.Domain.Entities.Area
+            //{
+            //    Areaa = request.Areaa,
+            //    Nombre = request.Nombre,
+            //    Activo = true,
+            //    UsuarioCreacionId = 1,
+            //    FechaCreacion = DateTime.Now
+            //};
+
+            var area = _mapper.Map<HelpDesk.Domain.Entities.Area>(request);
+
+            //De todas maneras seteamos datos imprecindibles
+            area.Activo = true;
+            area.UsuarioCreacionId = 1;
+            area.FechaCreacion = DateTime.Now;
 
             _repository.Add(area);
             await _database.SaveChangesAsync();

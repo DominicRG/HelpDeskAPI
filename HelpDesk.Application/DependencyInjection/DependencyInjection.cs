@@ -1,4 +1,5 @@
-﻿using HelpDesk.Application.Area.Services.Implementations;
+﻿using HelpDesk.Application.Area.Mappings;
+using HelpDesk.Application.Area.Services.Implementations;
 using HelpDesk.Application.Area.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,7 +14,7 @@ namespace HelpDesk.Application.DependencyInjection
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddServices();
-
+            services.AddAutoMapper(typeof(AreaProfile));
             return services;
         }
 
