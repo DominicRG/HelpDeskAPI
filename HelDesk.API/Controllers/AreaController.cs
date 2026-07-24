@@ -29,11 +29,6 @@ namespace HelDesk.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var area = await _service.GetByIdAsync(id);
-
-            if(area == null)
-            {
-                return NotFound(ApiResponseFactory.Failure<string>(EntityMessages.NotFound(EntityNames.Area)));
-            }
             
             return Ok(ApiResponseFactory.Success(area, EntityMessages.Get(EntityNames.Area)));
         }

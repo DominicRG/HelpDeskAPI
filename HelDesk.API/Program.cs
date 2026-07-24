@@ -1,5 +1,6 @@
 using HelpDesk.Infrastructure.DependencyInjection;
 using HelpDesk.Application.DependencyInjection;
+using HelDesk.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

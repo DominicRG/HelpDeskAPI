@@ -46,12 +46,12 @@ namespace HelpDesk.Application.Area.Services.Implementations
             return _mapper.Map<List<AreaDTO>>(areas);
         }
 
-        public async Task<AreaDTO?> GetByIdAsync(int id)
+        public async Task<AreaDTO> GetByIdAsync(int id)
         {
             var area = await _repository.GetByIdAsync(id);
 
-            if(area == null)
-                return null;
+            if (area == null) throw new NotFoundException(EntityMessages.NotFound(EntityNames.Area));
+                //return null;
 
             //return new AreaDTO
             //{
@@ -81,8 +81,8 @@ namespace HelpDesk.Application.Area.Services.Implementations
 
             //De todas maneras seteamos datos imprecindibles
             area.Activo = true;
-            area.UsuarioCreacionId = 1;
-            area.FechaCreacion = DateTime.Now;
+            area.UsuarioCreacionId = 1; //PROVISIONAL
+            area.FechaCreacion = DateTime.UtcNow; //PROVISIONAL
 
             _repository.Add(area);
             await _database.SaveChangesAsync();
@@ -100,12 +100,14 @@ namespace HelpDesk.Application.Area.Services.Implementations
             if (await _repository.ExistByCodeAsync(request.Areaa, id))
                 throw new BusinessException(EntityMessages.AlreadyExist(EntityNames.Area));
 
-            area.Areaa = request.Areaa;
-            area.Nombre = request.Nombre;
-            area.Activo = request.Activo;
+            _mapper.Map(request, area);
 
-            area.UsuarioModificaId = 1; //Ponemos un id provisional
-            area.FechaModifica = DateTime.Now;
+            //area.Areaa = request.Areaa;
+            //area.Nombre = request.Nombre;
+            //area.Activo = request.Activo;
+
+            area.UsuarioModificaId = 1; //Ponemos un id provisional - PROVISIONAL
+            area.FechaModifica = DateTime.UtcNow; //PROVISIONAL
 
             _repository.Update(area);
 
@@ -121,8 +123,8 @@ namespace HelpDesk.Application.Area.Services.Implementations
             if (area == null) throw new NotFoundException(EntityMessages.NotFound(EntityNames.Area));
 
             area.Activo = false;
-            area.UsuarioModificaId = 1; //Ponemos un id provisional
-            area.FechaModifica = DateTime.Now;
+            area.UsuarioModificaId = 1; //Ponemos un id provisional - PROVISIONAL
+            area.FechaModifica = DateTime.UtcNow; //PROVISIONAL
 
             _repository.Delete(area);
 
