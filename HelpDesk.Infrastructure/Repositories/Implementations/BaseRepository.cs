@@ -11,7 +11,7 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
 {
     public class BaseRepository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
 
         public BaseRepository(ApplicationDbContext context)
         {
@@ -36,6 +36,11 @@ namespace HelpDesk.Infrastructure.Repositories.Implementations
         public virtual void Delete(T entity)
         {
             _context.Set<T>().Update(entity);   
+        }
+
+        public virtual async Task<List<T>> GetAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace HelpDesk.Infrastructure.Persistence
 
         //public DbSet<Area> Area { get; set; }
         public DbSet<Area> Area => Set<Area>();
+        public DbSet<Rol> Rol => Set<Rol>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

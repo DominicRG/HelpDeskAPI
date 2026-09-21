@@ -50,6 +50,7 @@ namespace HelpDesk.Infrastructure.DependencyInjection
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAreaRepository, AreaRepository>();
+            services.AddScoped<IRolRepository, RolRepository>();
 
             //Registramos la interfaz para implementar los cambios globales
             services.AddScoped<IDatabaseContext>(provider => provider.GetRequiredService<ApplicationDbContext>());

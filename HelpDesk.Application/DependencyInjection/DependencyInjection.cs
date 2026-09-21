@@ -1,10 +1,9 @@
 ﻿using HelpDesk.Application.Area.Mappings;
 using HelpDesk.Application.Area.Services.Implementations;
 using HelpDesk.Application.Area.Services.Interfaces;
+using HelpDesk.Application.Rol.Services.Implementations;
+using HelpDesk.Application.Rol.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HelpDesk.Application.DependencyInjection
 {
@@ -22,6 +21,7 @@ namespace HelpDesk.Application.DependencyInjection
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IAreaService, AreaService>();
+            services.AddScoped<IRolService, RolService>();
 
             return services;
         }
